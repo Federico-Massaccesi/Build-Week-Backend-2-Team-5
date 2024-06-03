@@ -35,10 +35,10 @@ public class Cliente extends BaseEntity{
     private Integer telefonoContatto;
     private String logoAziendale;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "clienteSedeLegale", cascade = CascadeType.ALL)
     private Indirizzo sedeLegale;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "clienteSedeOperativa", cascade = CascadeType.ALL)
     private Indirizzo sedeOperativa;
 
     @OneToMany(mappedBy ="cliente", cascade = CascadeType.ALL)

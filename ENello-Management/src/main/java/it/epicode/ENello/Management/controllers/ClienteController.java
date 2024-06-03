@@ -1,6 +1,7 @@
 package it.epicode.ENello.Management.controllers;
 
 import it.epicode.ENello.Management.entities.Cliente;
+import it.epicode.ENello.Management.mappers.MapToCliente;
 import it.epicode.ENello.Management.services.ClienteService;
 import it.epicode.ENello.Management.validators.ClienteValidator;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    MapToCliente mapper;
 
     @GetMapping
     public ResponseEntity<Page<Cliente>> getAllClienti(Pageable pageable) {
@@ -32,14 +37,21 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ClienteValidator createCliente(@Valid @RequestBody ClienteValidator cliente) {
-        // Convert validator to entity as needed
-        return clienteService.saveCliente(cliente);
+    public ResponseEntity<Cliente> createCliente(@Valid @RequestBody ClienteValidator cliente, BindingResult validation) {
+        if (validation.hasErrors()) {
+            throw new RuntimeException(validation.getAllErrors().toString());
+        }
+
+    var newClient = mapper.convertToEntity(cliente);
+         clienteService.saveCliente(newClient);
+
+         return new ResponseEntity<>(newClient,HttpStatus.CREATED);
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
-        clienteService.deleteCliente(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Cliente> deleteCliente(@PathVariable Long id) {
+        var client = clienteService.deleteCliente(id);
+        return new ResponseEntity<>(client,HttpStatus.OK);
     }
 }

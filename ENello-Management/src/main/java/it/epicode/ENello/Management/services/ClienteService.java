@@ -5,9 +5,8 @@ import it.epicode.ENello.Management.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -28,6 +27,12 @@ public class ClienteService {
     }
 
     public Cliente saveCliente(Cliente cliente){
+        if (cliente.getSedeLegale() != null) {
+            cliente.getSedeLegale().setClienteSedeLegale(cliente);
+        }
+        if (cliente.getSedeOperativa() != null) {
+            cliente.getSedeOperativa().setClienteSedeOperativa(cliente);
+        }
         return clienteRepository.save(cliente);
     }
 
