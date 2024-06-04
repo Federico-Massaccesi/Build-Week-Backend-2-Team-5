@@ -3,6 +3,7 @@ package it.epicode.ENello.Management.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
@@ -18,7 +19,10 @@ public class Indirizzo extends BaseEntity{
     private String civico;
     private String localita;
     private int cap;
-    private String comune;
+
+    @ManyToOne
+    @JoinColumn(name = "comune_id")
+    private Comune comune;
 
     @JsonIgnore
     @OneToOne
