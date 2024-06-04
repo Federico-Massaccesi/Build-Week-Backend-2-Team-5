@@ -30,6 +30,9 @@ public class FattureService {
     }
 
     public Fatture saveFatture(Fatture fatture){
+
+        //fatture.getCliente().getId()
+
         return fattureRepository.save(fatture);
     }
 
