@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class Comune extends BaseEntity{
 
     private String nome;
+    private String Regione;
 
     @ManyToOne
     @JoinColumn(name = "provincia_id")

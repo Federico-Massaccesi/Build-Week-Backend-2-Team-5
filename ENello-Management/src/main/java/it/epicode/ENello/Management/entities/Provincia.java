@@ -1,10 +1,14 @@
 package it.epicode.ENello.Management.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -15,5 +19,8 @@ public class Provincia extends BaseEntity{
 
     private String nome;
     private String sigla;
+    private String regione;
 
+    @OneToMany(mappedBy ="provincia", cascade = CascadeType.ALL)
+    private List<Comune> comuni;
 }
