@@ -2,10 +2,10 @@ package it.epicode.ENello.Management.services;
 
 import it.epicode.ENello.Management.entities.Cliente;
 import it.epicode.ENello.Management.repositories.ClienteRepository;
+import it.epicode.ENello.Management.repositories.ComuneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +13,9 @@ public class ClienteService {
 
     @Autowired
     public ClienteRepository clienteRepository;
+
+    @Autowired
+    public ComuneRepository comuneRepository;
 
     public Page<Cliente> getAllClienti(Pageable pageable){
         return clienteRepository.findAll(pageable);
@@ -27,6 +30,15 @@ public class ClienteService {
     }
 
     public Cliente saveCliente(Cliente cliente){
+
+        var comuneSLegale = comuneRepository.findByNome(cliente.getSedeLegale().getComune().getNome());
+
+        comuneSLegale.ifPresent(comune -> cliente.getSedeLegale().setComune(comune));
+
+        var comuneSOperativa = comuneRepository.findByNome(cliente.getSedeOperativa().getComune().getNome());
+
+        comuneSOperativa.ifPresent(comune -> cliente.getSedeOperativa().setComune(comune));
+
         if (cliente.getSedeLegale() != null) {
             cliente.getSedeLegale().setClienteSedeLegale(cliente);
         }

@@ -1,9 +1,7 @@
 package it.epicode.ENello.Management.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +19,11 @@ public class Comune extends BaseEntity{
     private String nome;
     private String regione;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "provincia_id")
     private Provincia provincia;
 
-    @OneToMany(mappedBy = "comune")
+    @JsonIgnore
+    @OneToMany(mappedBy = "comune", cascade = CascadeType.ALL)
     private List<Indirizzo> indirizzi;
 }

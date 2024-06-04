@@ -1,10 +1,7 @@
 package it.epicode.ENello.Management.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,20 +14,19 @@ public class Indirizzo extends BaseEntity{
 
     private String via;
     private String civico;
-    private String localita;
     private int cap;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "comune_id")
     private Comune comune;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cliente_sede_legale_id")
     private Cliente clienteSedeLegale;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cliente_sede_operativa_id")
     private Cliente clienteSedeOperativa;
 }
