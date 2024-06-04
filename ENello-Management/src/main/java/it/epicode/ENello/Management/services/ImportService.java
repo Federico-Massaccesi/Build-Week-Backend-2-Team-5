@@ -43,26 +43,26 @@ public class ImportService {
     }
 
 
-public void importaComuni(MultipartFile file) throws IOException {
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-        br.readLine();
-        String line;
-        int lineNumber = 1;
-        while ((line = br.readLine()) != null) {
-            lineNumber++;
-            String[] fields = line.split(";");
-            Optional<Provincia> provincia = provinciaRepository.findByNome(fields[3]);
-               if (provincia.isPresent()) {
-                   Comune comune = Comune.builder()
-                           .withNome(fields[2])
-                           .withProvincia(provincia.get())
-                           .withRegione(provincia.get().getRegione())
-                           .build();
-                   comuneRepository.save(comune);
-         } else {
-                System.err.println("Riga " + lineNumber + " non valida: " + line);
+    public void importaComuni(MultipartFile file) throws IOException {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            br.readLine();
+            String line;
+            int lineNumber = 1;
+            while ((line = br.readLine()) != null) {
+                lineNumber++;
+                String[] fields = line.split(";");
+                Optional<Provincia> provincia = provinciaRepository.findByNome(fields[3]);
+                if (provincia.isPresent()) {
+                    Comune comune = Comune.builder()
+                            .withNome(fields[2])
+                            .withProvincia(provincia.get())
+                            .withRegione(provincia.get().getRegione())
+                            .build();
+                    comuneRepository.save(comune);
+                } else {
+                    System.err.println("Riga " + lineNumber + " non valida: " + line);
+                }
             }
         }
     }
-}
 }
