@@ -28,8 +28,7 @@ public class UserEntity extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )    private List<RoleEntity> roles = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
-    private Image avatarImg;
+    private String avatarImg;
 
     private String token;
 
