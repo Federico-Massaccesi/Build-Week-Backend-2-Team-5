@@ -24,7 +24,7 @@ public class FatturaController {
 
 
     @Autowired
-    FatturaMapper mapper;
+    private FatturaMapper mapper;
 
     @GetMapping
     public ResponseEntity<Page<Fatture>> getAllFatture(Pageable pageable) {
@@ -42,9 +42,9 @@ public class FatturaController {
         if (validation.hasErrors()) {
             throw new RuntimeException(validation.getAllErrors().toString());
         }
-        var newClient = FatturaMapper.mapToEntity(fattura);
-        fattureService.saveFatture(newClient);
-        return new ResponseEntity<>(newClient,HttpStatus.CREATED);
+        var newFattura = mapper.mapToEntity(fattura);
+        fattureService.saveFatture(newFattura);
+        return new ResponseEntity<>(newFattura,HttpStatus.CREATED);
     }
 
 

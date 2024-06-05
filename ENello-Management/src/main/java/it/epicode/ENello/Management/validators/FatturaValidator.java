@@ -23,5 +23,5 @@ public record FatturaValidator(
 
 
         @NotNull(message = "Cliente è obbligatorio")
-        Cliente cliente) {
+        Long idCliente) {
 }

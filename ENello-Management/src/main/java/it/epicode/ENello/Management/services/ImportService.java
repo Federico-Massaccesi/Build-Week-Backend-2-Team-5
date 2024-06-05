@@ -24,7 +24,7 @@ public class ImportService {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             br.readLine();
             String line;
-            int lineNumber = 1;
+            int lineNumber = 0;
             while ((line = br.readLine()) != null) {
                 lineNumber++;
                 String[] fields = line.split(";");
@@ -47,7 +47,7 @@ public class ImportService {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             br.readLine();
             String line;
-            int lineNumber = 1;
+            int lineNumber = 0;
             while ((line = br.readLine()) != null) {
                 lineNumber++;
                 String[] fields = line.split(";");

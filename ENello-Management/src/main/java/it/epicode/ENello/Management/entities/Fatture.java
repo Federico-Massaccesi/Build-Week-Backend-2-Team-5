@@ -23,6 +23,7 @@ public class Fatture  extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private Cliente cliente;
     //CREARE DTO SENZA CLIENTE E CERCO IN BASE ALL'ID
 }
