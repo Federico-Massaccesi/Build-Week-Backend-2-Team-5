@@ -11,7 +11,7 @@ import java.io.IOException;
 @Slf4j
 public class CloudinaryService implements ImageStorageService{
 
-    public static final String CLOUDINARY_URL = System.getenv("CLOUDINARY_URL");
+    public static final String CLOUDINARY_URL = System.getenv("cloudinary_url");
 
     private final Cloudinary cloudinary;
 
