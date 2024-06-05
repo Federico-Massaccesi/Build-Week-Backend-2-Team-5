@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class ClienteService {
 
@@ -55,6 +57,29 @@ public class ClienteService {
         }else{
             throw new RuntimeException();//SOSTITUIRE CON ECCEZIONE
         }
+    }
+    public Page<Cliente> getClientiByNome(String nome, Pageable pageable) {
+        return clienteRepository.findByNomeContaining(nome, pageable);
+    }
+
+    public Page<Cliente> getClientiByFatturatoAnnuale(Double fatturatoAnnuale, Pageable pageable) {
+        return clienteRepository.findByFatturatoAnnualeGreaterThanEqual(fatturatoAnnuale, pageable);
+    }
+
+    public Page<Cliente> getClientiByDataInserimento(LocalDate dataInserimento, Pageable pageable) {
+        return clienteRepository.findByDataInserimentoAfter(dataInserimento, pageable);
+    }
+
+    public Page<Cliente> getClientiByDataUltimoContatto(LocalDate dataUltimoContatto, Pageable pageable) {
+        return clienteRepository.findByDataUltimoContattoAfter(dataUltimoContatto, pageable);
+    }
+
+    public Page<Cliente> getClientiByProvinciaSedeLegale(String provincia, Pageable pageable) {
+        return clienteRepository.findByProvinciaSedeLegale(provincia, pageable);
+    }
+
+    public Page<Cliente> getClientiByFilters(Double fatturatoAnnuale, LocalDate dataInserimento, LocalDate dataUltimoContatto, String nome, Pageable pageable) {
+        return clienteRepository.findByFilters(fatturatoAnnuale, dataInserimento, dataUltimoContatto, nome, pageable);
     }
 
 }

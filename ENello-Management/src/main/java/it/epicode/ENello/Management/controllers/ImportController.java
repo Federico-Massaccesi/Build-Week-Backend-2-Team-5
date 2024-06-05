@@ -1,6 +1,5 @@
 package it.epicode.ENello.Management.controllers;
 
-import com.opencsv.exceptions.CsvValidationException;
 import it.epicode.ENello.Management.services.ImportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
