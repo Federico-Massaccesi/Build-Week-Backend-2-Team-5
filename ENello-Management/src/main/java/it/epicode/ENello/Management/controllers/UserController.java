@@ -120,6 +120,11 @@ public class UserController {
         return new ResponseEntity<>(foundedUser, HttpStatus.FOUND);
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
+        Optional<UserEntity> userOptional = userRepository.findOneByUsername(username);
+        return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    }
 
 //    @PutMapping(value ="/{id}")
 //    public ResponseEntity<UserEntity> updateUser(@RequestBody @Validated UserValidation validatedUser, BindingResult validator,@PathVariable Long id){
