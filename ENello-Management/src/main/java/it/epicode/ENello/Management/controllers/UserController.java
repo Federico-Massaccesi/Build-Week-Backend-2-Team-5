@@ -149,4 +149,12 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
     }
 
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/send-email")
+    public ResponseEntity<String> sendTestEmail(@RequestParam String email) {
+        userService.sendMailRegistrazione(email);
+        return ResponseEntity.ok("Email inviata con successo!");
+    }
 }
