@@ -34,14 +34,11 @@ public class UserController {
     @PostMapping("/{username}/avatar")
     public ResponseEntity<String> uploadAvatar(@PathVariable String username, @RequestParam("file") MultipartFile file) {
         try {
-            // Carica l'immagine su Cloudinary
             var uploadResult = cloudinary.uploader().upload(file.getBytes(),
                     com.cloudinary.utils.ObjectUtils.asMap("public_id", username + "_avatar"));
 
-            // Recupera l'URL dell'immagine
             String url = uploadResult.get("url").toString();
 
-            // Aggiorna l'utente con l'URL dell'immagine avatar
             Optional<UserEntity> userOptional = userRepository.findOneByUsername(username);
             if (userOptional.isPresent()) {
                 UserEntity user = userOptional.get();
@@ -126,20 +123,6 @@ public class UserController {
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
-//    @PutMapping(value ="/{id}")
-//    public ResponseEntity<UserEntity> updateUser(@RequestBody @Validated UserValidation validatedUser, BindingResult validator,@PathVariable Long id){
-//        if(validator.hasErrors()){
-//            throw new RuntimeException("User validation failed");
-//        }else{
-//
-//            var newUser = svc.updateUser(mapper.toUserEntity(validatedUser),id);
-//
-//            return new ResponseEntity<>(newUser,HttpStatus.ACCEPTED);
-//
-//
-//        }
-//
-//    }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<UserEntity> deleteUser(@PathVariable Long id){
